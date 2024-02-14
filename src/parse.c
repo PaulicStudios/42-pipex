@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/14 22:08:22 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:40:12 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,28 @@ void	ft_check_fd(int fd)
 	}
 }
 
+t_process	*ft_parse_process_infos(char *cmd, char **envp)
+{
+	t_process	*process;
+	char		*path;
+
+	path = ft_get_path(envp);
+	process = malloc(sizeof(t_process));
+	if (!process)
+		return (NULL);
+	process->args = ft_split(cmd, ' ');
+	process->cmd = ft_get_cmd_path(process->args[0], path);
+	if (!process->cmd)
+		return (NULL);
+	process->fd_in = -1;
+	process->fd_out = -1;
+	return (process);
+}
+
 t_args	ft_parse_args(int argc, char **argv, char **envp)
 {
 	t_args		args;
 	int			ind;
-	char		*path;
 
 	if (argc < 5)
 	{
@@ -78,21 +95,17 @@ t_args	ft_parse_args(int argc, char **argv, char **envp)
 	ft_check_fd(args.fd_in);
 	args.fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT);
 	ft_check_fd(args.fd_out);
-	path = ft_get_path(envp);
 	ind = 2;
 	args.processes = malloc(sizeof(t_process *) * (argc - 2));
 	if (!args.processes)
 		ft_exit_error(&args, "malloc failed");
 	while (ind < argc - 1)
 	{
-		args.processes[ind - 2] = malloc(sizeof(t_process));
-		args.processes[ind - 2]->cmd = ft_get_cmd_path(argv[ind], path);
-		if (!args.processes[ind - 2]->cmd)
+		args.processes[ind - 2] = ft_parse_process_infos(argv[ind], envp);
+		if (!args.processes[ind - 2])
 			ft_exit_error(&args, "command not found");
 		ind++;
 	}
-	args.processes[ind - 2] = malloc(sizeof(t_process));
-	args.processes[ind - 2]->cmd = NULL;
-	free(path);
+	args.processes[ind - 2] = NULL;
 	return (args);
 }

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/14 22:04:20 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:11:16 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_process
 	int		fd_in;
 	int		fd_out;
 	char	*cmd;
+	char	**args;
 }			t_process;
 typedef struct s_args
 {
