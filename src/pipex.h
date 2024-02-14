@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2023/12/06 14:43:31 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:04:20 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,26 @@
 # include <fcntl.h>
 # include <sys/errno.h>
 # include "libft.h"
+# include "ft_printf.h"
 
-typedef struct s_args
+typedef struct s_process
 {
+	int		pipe_fd[2];
 	int		fd_in;
 	int		fd_out;
-	char	**cmds;
-}			t_args;
+	char	*cmd;
+}			t_process;
+typedef struct s_args
+{
+	int			fd_in;
+	int			fd_out;
+	t_process	**processes;
+}				t_args;
+
+//pipex.c
+void	ft_exit_error(t_args *args, char *msg);
 
 //parse.c
-t_args	ft_parse(int argc, char **argv);
+t_args	ft_parse_args(int argc, char **argv, char **envp);
 
 #endif

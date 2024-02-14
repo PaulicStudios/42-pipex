@@ -6,12 +6,12 @@
 #    By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/09 12:59:39 by pgrossma          #+#    #+#              #
-#    Updated: 2023/11/25 19:31:48 by pgrossma         ###   ########.fr        #
+#    Updated: 2024/02/14 21:59:34 by pgrossma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSLIBFT = \
-ft_atof.c ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c\
+ft_atof.c ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_free_array.c\
 ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c\
 ft_itoa.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_pow.c\
 ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c\
