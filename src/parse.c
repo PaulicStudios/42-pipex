@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/14 22:40:12 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/18 13:35:31 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ t_process	*ft_parse_process_infos(char *cmd, char **envp)
 	process->cmd = ft_get_cmd_path(process->args[0], path);
 	if (!process->cmd)
 		return (NULL);
-	process->fd_in = -1;
-	process->fd_out = -1;
 	return (process);
 }
 
@@ -86,11 +84,6 @@ t_args	ft_parse_args(int argc, char **argv, char **envp)
 	t_args		args;
 	int			ind;
 
-	if (argc < 5)
-	{
-		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 .. file2\n", 2);
-		exit(1);
-	}
 	args.fd_in = open(argv[1], O_RDONLY);
 	ft_check_fd(args.fd_in);
 	args.fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT);
@@ -107,5 +100,6 @@ t_args	ft_parse_args(int argc, char **argv, char **envp)
 		ind++;
 	}
 	args.processes[ind - 2] = NULL;
+	args.process_len = argc - 3;
 	return (args);
 }
