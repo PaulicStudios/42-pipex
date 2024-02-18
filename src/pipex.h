@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/18 13:33:55 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:51:54 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 
 typedef struct s_process
 {
-	int		pipe_fd[2];
+	int		pipe_fd_in[2];
+	int		pipe_fd_out[2];
 	char	*cmd;
 	char	**args;
 	int		pid;
