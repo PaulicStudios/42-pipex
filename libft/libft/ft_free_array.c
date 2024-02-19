@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 21:26:06 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/14 21:26:42 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:31:40 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_free_array(void **array)
 {
 	size_t	i;
 
+	if (!array)
+		return ;
 	i = 0;
 	while (array[i])
 	{
@@ -24,5 +26,4 @@ void	ft_free_array(void **array)
 		i++;
 	}
 	free(array);
-	array = NULL;
 }

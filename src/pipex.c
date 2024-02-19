@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 16:10:21 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:46:04 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@ void	ft_free_close(t_args *args)
 {
 	int ind;
 
-	if (args->fd_in != -1)
-		close(args->fd_in);
-	if (args->fd_out != -1)
-		close(args->fd_out);
+	close(args->fd_in);
+	close(args->fd_out);
 	ft_close_pipes(args);
 	if (args->processes)
 	{
 		ind = 0;
 		while (args->processes[ind])
 		{
-			free(args->processes[ind]->cmd);
+			if (args->processes[ind]->cmd)
+				free(args->processes[ind]->cmd);
 			ft_free_array((void **) args->processes[ind]->args);
 			ind++;
 		}
@@ -50,12 +49,12 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	args = ft_parse_args(argc, argv, envp);
-	int ind = 0;
-	while (args.processes[ind])
-	{
-		printf("cmd: %s\n", args.processes[ind]->cmd);
-		ind++;
-	}
+	// int ind = 0;
+	// while (args.processes[ind])
+	// {
+	// 	printf("cmd: %s\n", args.processes[ind]->cmd);
+	// 	ind++;
+	// }
 	ft_execute_processes(&args, envp);
 	ft_free_close(&args);
 	ft_wait_for_processes();

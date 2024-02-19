@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:56:31 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 16:07:13 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:46:21 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_close_pipes(t_args *args)
 {
 	int	ind;
 
+	if (!args->processes)
+		return ;
 	ind = 0;
 	while (args->processes[ind])
 	{
