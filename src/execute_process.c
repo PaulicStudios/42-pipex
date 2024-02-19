@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:56:31 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/18 17:41:03 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:35:46 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,45 +51,43 @@ void	ft_close_pipes(t_args *args)
 
 	ind = 0;
 	while (args->processes[ind])
-		ft_close_pipe(args->processes[ind]);
+		ft_close_pipe(args->processes[ind++]);
 }
 
 void	ft_execute_processes(t_args *args, char **envp)
 {
-	// int	std_in;
-	// int	std_out;
 	int	ind;
 
-	// std_in = dup2(args->fd_in, STDIN_FILENO);
-	// std_out = dup2(args->fd_out, STDOUT_FILENO);
 	ind = 0;
 	while (args->processes[ind])
 	{
 		if (ind == 0)
 		{
-			if (pipe(args->processes[ind]->pipe_fd_in) != 0)
-				ft_exit_error(args, "Could not create pipe");
-			dup2(args->fd_in, args->processes[ind]->pipe_fd_in[PIPE_READ]);
-			close(args->fd_in);
 			if (pipe(args->processes[ind]->pipe_fd_out) != 0)
 				ft_exit_error(args, "Could not create pipe");
+			args->processes[ind]->pipe_fd_in[PIPE_READ] = args->fd_in;
 			ft_execute_process(args->processes[ind], envp);
 		}
-		if (ind == 1)
+		else if (ind == args->process_len - 1)
 		{
-			args->processes[ind]->pipe_fd_in[0] = args->processes[ind - 1]->pipe_fd_out[0];
-			args->processes[ind]->pipe_fd_in[1] = args->processes[ind - 1]->pipe_fd_out[1];
+			args->processes[ind]->pipe_fd_in[PIPE_READ] = args->processes[ind - 1]->pipe_fd_out[PIPE_READ];
+			args->processes[ind]->pipe_fd_in[PIPE_WRITE] = args->processes[ind - 1]->pipe_fd_out[PIPE_WRITE];
+			args->processes[ind]->pipe_fd_out[PIPE_WRITE] = args->fd_out;
+			ft_execute_process(args->processes[ind], envp);
+		}
+		else
+		{
 			if (pipe(args->processes[ind]->pipe_fd_out) != 0)
 				ft_exit_error(args, "Could not create pipe");
-			dup2(1, args->processes[ind]->pipe_fd_out[PIPE_READ]);
-			close(args->fd_out);
+			args->processes[ind]->pipe_fd_in[PIPE_READ] = args->processes[ind - 1]->pipe_fd_out[PIPE_READ];
+			args->processes[ind]->pipe_fd_in[PIPE_WRITE] = args->processes[ind - 1]->pipe_fd_out[PIPE_WRITE];
 			ft_execute_process(args->processes[ind], envp);
 		}
 		ind++;
 	}
-	ft_close_pipes(args);
 	close(args->fd_in);
 	close(args->fd_out);
+	ft_close_pipes(args);
 	ft_wait_for_processes();
 }
 
