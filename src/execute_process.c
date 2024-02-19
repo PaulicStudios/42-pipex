@@ -6,19 +6,11 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:56:31 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 12:35:46 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:07:13 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_close_pipe(t_process *process)
-{
-	close(process->pipe_fd_in[0]);
-	close(process->pipe_fd_in[1]);
-	close(process->pipe_fd_out[0]);
-	close(process->pipe_fd_out[1]);
-}
 
 bool	ft_execute_process(t_process *process, char **envp)
 {
@@ -29,9 +21,12 @@ bool	ft_execute_process(t_process *process, char **envp)
 	{
 		if (dup2(process->pipe_fd_in[PIPE_READ], STDIN_FILENO) == -1)
 			return false;
+		close(process->pipe_fd_in[PIPE_READ]);
+		close(process->pipe_fd_in[PIPE_WRITE]);
 		if (dup2(process->pipe_fd_out[PIPE_WRITE], STDOUT_FILENO) == -1)
 			return false;
-		ft_close_pipe(process);
+		close(process->pipe_fd_out[PIPE_READ]);
+		close(process->pipe_fd_out[PIPE_WRITE]);
 		execve(process->cmd, process->args, envp);
 	}
 	return true;
@@ -51,7 +46,13 @@ void	ft_close_pipes(t_args *args)
 
 	ind = 0;
 	while (args->processes[ind])
-		ft_close_pipe(args->processes[ind++]);
+	{
+		close(args->processes[ind]->pipe_fd_in[0]);
+		close(args->processes[ind]->pipe_fd_in[1]);
+		close(args->processes[ind]->pipe_fd_out[0]);
+		close(args->processes[ind]->pipe_fd_out[1]);
+		ind++;
+	}
 }
 
 void	ft_execute_processes(t_args *args, char **envp)
@@ -82,13 +83,11 @@ void	ft_execute_processes(t_args *args, char **envp)
 			args->processes[ind]->pipe_fd_in[PIPE_READ] = args->processes[ind - 1]->pipe_fd_out[PIPE_READ];
 			args->processes[ind]->pipe_fd_in[PIPE_WRITE] = args->processes[ind - 1]->pipe_fd_out[PIPE_WRITE];
 			ft_execute_process(args->processes[ind], envp);
+			close(args->processes[ind]->pipe_fd_in[PIPE_READ]);
+			close(args->processes[ind]->pipe_fd_in[PIPE_WRITE]);
 		}
 		ind++;
 	}
-	close(args->fd_in);
-	close(args->fd_out);
-	ft_close_pipes(args);
-	ft_wait_for_processes();
 }
 
 // void	ft_execute_processes(t_args *args, char **envp)

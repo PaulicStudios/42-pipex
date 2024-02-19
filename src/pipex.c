@@ -6,20 +6,21 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/18 13:34:44 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:10:21 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_exit_error(t_args *args, char *msg)
+void	ft_free_close(t_args *args)
 {
-	int	ind;
+	int ind;
 
 	if (args->fd_in != -1)
 		close(args->fd_in);
 	if (args->fd_out != -1)
 		close(args->fd_out);
+	ft_close_pipes(args);
 	if (args->processes)
 	{
 		ind = 0;
@@ -30,6 +31,11 @@ void	ft_exit_error(t_args *args, char *msg)
 			ind++;
 		}
 	}
+}
+
+void	ft_exit_error(t_args *args, char *msg)
+{
+	ft_free_close(args);
 	perror(msg);
 	exit(EXIT_FAILURE);
 }
@@ -50,19 +56,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("cmd: %s\n", args.processes[ind]->cmd);
 		ind++;
 	}
-
-	// int fds[2];
-	// pipe(fds);
-	// dup2(args.fd_in, STDIN_FILENO);
-	// dup2(args.fd_out, STDOUT_FILENO);
-
-	// execve(args.processes[0]->cmd, args.processes[0]->args, envp);
-
 	ft_execute_processes(&args, envp);
-
-	// printf("fd_in: %d\n", args.fd_in);
-	// printf("fd_out: %d\n", args.fd_out);
-	// printf("cmd1: %s\n", args.cmds[0]);
-	// printf("cmd2: %s\n", args.cmds[1]);
-	// free(args.cmds);
+	ft_free_close(&args);
+	ft_wait_for_processes();
+	// sleep(999999);
 }
