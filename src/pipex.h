@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 17:25:00 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:46:29 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_args	ft_parse_args(int argc, char **argv, char **envp);
 //execute_process.c
 void	ft_execute_processes(t_args *args, char **envp);
 void	ft_close_pipes(t_args *args);
-void	ft_wait_for_processes();
+void	ft_wait_for_processes(void);
 void	ft_free_close(t_args *args);
 
 #endif

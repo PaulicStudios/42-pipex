@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 17:46:04 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:46:07 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_close(t_args *args)
 {
-	int ind;
+	int	ind;
 
 	close(args->fd_in);
 	close(args->fd_out);
