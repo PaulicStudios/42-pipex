@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/21 17:46:07 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:54:13 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_free_close(t_args *args)
 {
 	int	ind;
 
-	close(args->fd_in);
-	close(args->fd_out);
+	ft_close_fd(&args->fd_in);
+	ft_close_fd(&args->fd_out);
 	ft_close_pipes(args);
 	if (args->processes)
 	{
@@ -58,5 +58,4 @@ int	main(int argc, char **argv, char **envp)
 	ft_execute_processes(&args, envp);
 	ft_free_close(&args);
 	ft_wait_for_processes();
-	// sleep(999999);
 }

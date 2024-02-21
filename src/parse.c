@@ -6,17 +6,19 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/19 18:11:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:43:24 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_get_path(char **envp)
+char	*ft_get_path(t_args *args, char **envp)
 {
 	int		i;
 	char	*path;
 
+	if (!envp)
+		ft_exit_error(args, "no environment");
 	i = 0;
 	while (envp[i])
 	{
@@ -27,6 +29,7 @@ char	*ft_get_path(char **envp)
 		}
 		i++;
 	}
+	ft_exit_error(args, "no path in environment");
 	return (NULL);
 }
 
@@ -64,26 +67,29 @@ void	ft_check_fd(int fd, t_args *args)
 	}
 }
 
-t_process	*ft_parse_process_infos(char *cmd, char **envp)
+t_process	*ft_parse_process_infos(t_args *args, char *cmd, char *path)
 {
 	t_process	*process;
-	char		*path;
 
-	path = ft_get_path(envp);
 	process = malloc(sizeof(t_process));
 	if (!process)
-		return (NULL);
+		ft_exit_error(args, "malloc failed");
 	process->args = ft_split(cmd, ' ');
 	process->cmd = ft_get_cmd_path(process->args[0], path);
 	if (!process->cmd)
-		return (NULL);
+	{
+		ft_putstr_fd("command not found: ", 2);
+		ft_putstr_fd(process->args[0], 2);
+		ft_putchar_fd('\n', 2);
+	}
 	return (process);
 }
 
 t_args	ft_parse_args(int argc, char **argv, char **envp)
 {
-	t_args		args;
-	int			ind;
+	t_args	args;
+	int		ind;
+	char	*path;
 
 	args.fd_in = -1;
 	args.fd_out = -1;
@@ -92,15 +98,14 @@ t_args	ft_parse_args(int argc, char **argv, char **envp)
 	ft_check_fd(args.fd_in, &args);
 	args.fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT, 0644);
 	ft_check_fd(args.fd_out, &args);
+	path = ft_get_path(&args, envp);
 	ind = 2;
 	args.processes = malloc(sizeof(t_process *) * (argc - 2));
 	if (!args.processes)
 		ft_exit_error(&args, "malloc failed");
 	while (ind < argc - 1)
 	{
-		args.processes[ind - 2] = ft_parse_process_infos(argv[ind], envp);
-		if (!args.processes[ind - 2])
-			ft_exit_error(&args, "command not found");
+		args.processes[ind - 2] = ft_parse_process_infos(&args, argv[ind], path);
 		ind++;
 	}
 	args.processes[ind - 2] = NULL;
