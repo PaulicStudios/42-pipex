@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/21 18:43:24 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:16:08 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_args	ft_parse_args(int argc, char **argv, char **envp)
 	args.processes = NULL;
 	args.fd_in = open(argv[1], O_RDONLY);
 	ft_check_fd(args.fd_in, &args);
-	args.fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT, 0644);
+	args.fd_out = open(argv[argc - 1], O_TRUNC | O_WRONLY | O_CREAT, 0644);
 	ft_check_fd(args.fd_out, &args);
 	path = ft_get_path(&args, envp);
 	ind = 2;
