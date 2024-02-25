@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 16:07:09 by pgrossma          #+#    #+#             */
-/*   Updated: 2023/10/14 20:01:51 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:58:27 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
 
-	if (size != 0 && count > SIZE_T_MAX / size)
+	if (size != 0 && count > SIZE_MAX / size)
 		return (0);
 	ptr = malloc(count * size);
 	if (!ptr)

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:10:05 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/14 21:27:01 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:59:09 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <stdint.h>
 
 typedef struct s_list
 {

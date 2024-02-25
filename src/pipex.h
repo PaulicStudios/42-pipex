@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:38:34 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:51:34 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
 # include "libft.h"
 # include "ft_printf.h"
 # include "stdbool.h"
