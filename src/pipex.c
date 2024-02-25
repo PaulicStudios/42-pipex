@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:09:03 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:13:39 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	ft_free_close(t_args *args)
 			if (args->processes[ind]->cmd)
 				free(args->processes[ind]->cmd);
 			ft_free_array((void **) args->processes[ind]->args);
+			free(args->processes[ind]);
 			ind++;
 		}
+		free(args->processes);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:27:03 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:13:12 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ char	*ft_get_path(t_args *args, char **envp)
 	return (NULL);
 }
 
-char	*ft_get_cmd_path(char *cmd, char *path)
+char	*ft_get_cmd_path(char *cmd, char *path, t_args *args)
 {
 	char	**dirs;
 	char	*cmd_path;
+	char	*tmp;
 	int		ind;
 
 	dirs = ft_split(path, ':');
@@ -44,7 +45,19 @@ char	*ft_get_cmd_path(char *cmd, char *path)
 	while (dirs[ind])
 	{
 		cmd_path = ft_strjoin(dirs[ind], "/");
-		cmd_path = ft_strjoin(cmd_path, cmd);
+		if (!cmd_path)
+		{
+			ft_free_array((void **) dirs);
+			ft_exit_error(args, "malloc failed");
+		}
+		tmp = ft_strjoin(cmd_path, cmd);
+		free(cmd_path);
+		if (!tmp)
+		{
+			ft_free_array((void **) dirs);
+			ft_exit_error(args, "malloc failed");
+		}
+		cmd_path = tmp;
 		if (access(cmd_path, F_OK | X_OK) == 0)
 		{
 			ft_free_array((void **) dirs);
@@ -65,7 +78,7 @@ t_process	*ft_parse_process_infos(t_args *args, char *cmd, char *path)
 	if (!process)
 		ft_exit_error(args, "malloc failed");
 	process->args = ft_split(cmd, ' ');
-	process->cmd = ft_get_cmd_path(process->args[0], path);
+	process->cmd = ft_get_cmd_path(process->args[0], path, args);
 	if (!process->cmd)
 	{
 		ft_putstr_fd("command not found: ", 2);
