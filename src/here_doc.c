@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:22:52 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:16:28 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:35:28 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_handle_here_doc(t_args *args, char **argv, int argc)
 		if (ft_strncmp(line, args->limiter, ft_strlen(args->limiter)) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		ft_putstr_fd(line, fd_pipe[PIPE_WRITE]);
 		free(line);

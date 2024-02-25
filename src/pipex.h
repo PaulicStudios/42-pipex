@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:51:34 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:51:26 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_args
 	int			fd_in;
 	int			fd_out;
 	int			process_len;
+	int			start_arg;
 	t_process	**processes;
 }				t_args;
 
@@ -48,6 +49,10 @@ void	ft_exit_error(t_args *args, char *msg);
 
 //parse.c
 t_args	ft_parse_args(int argc, char **argv, char **envp);
+
+//parse_utils.c
+char	*ft_get_cmd_path(char *cmd, char *path, t_args *args);
+char	*ft_get_path(t_args *args, char **envp);
 
 //here_doc.c
 void	ft_handle_here_doc(t_args *args, char **argv, int argc);

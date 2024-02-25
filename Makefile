@@ -6,11 +6,11 @@
 #    By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/09 12:59:39 by pgrossma          #+#    #+#              #
-#    Updated: 2024/02/25 20:02:42 by pgrossma         ###   ########.fr        #
+#    Updated: 2024/02/25 20:54:20 by pgrossma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =	src/pipex.c src/parse.c src/here_doc.c src/execute_process.c src/fork.c src/utils.c
+SRC =	src/pipex.c src/parse.c src/parse_utils.c src/here_doc.c src/execute_process.c src/fork.c src/utils.c
 OBJ = $(SRC:%.c=%.o)
 
 NAME = pipex

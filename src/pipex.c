@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:13:39 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:55:45 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	args = ft_parse_args(argc, argv, envp);
-	// int ind = 0;
-	// while (args.processes[ind])
-	// {
-	// 	printf("cmd: %s\n", args.processes[ind]->cmd);
-	// 	ind++;
-	// }
 	ft_execute_processes(&args, envp);
 	ft_free_close(&args);
 	ft_wait_for_processes();
