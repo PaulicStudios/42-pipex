@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/21 18:54:13 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:09:03 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 	{
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 .. file2\n", 2);
+		ft_putstr_fd("Usage: ./pipex here_doc LIMITER cmd1 cmd2 .. out\n", 2);
 		exit(1);
 	}
 	args = ft_parse_args(argc, argv, envp);

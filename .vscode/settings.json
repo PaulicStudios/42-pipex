@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"locale": "c",
-		"pipex.h": "c",
-		"string.h": "c"
-	}
-}

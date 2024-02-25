@@ -1,4 +1,7 @@
+.vscode
 *.a
 *.o
 *.out
 pipex
+in
+out

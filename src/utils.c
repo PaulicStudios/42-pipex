@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:06:03 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/21 18:26:53 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:34:40 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,24 @@ void	ft_close_pipes(t_args *args)
 		ft_close_fd(&args->processes[ind]->pipe_fd_out[PIPE_WRITE]);
 		ind++;
 	}
+}
+
+void	ft_check_fd(int fd, t_args *args)
+{
+	if (fd == -1)
+	{
+		ft_free_close(args);
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	ft_wait_for_processes(void)
+{
+	int	status;
+	int	pid;
+
+	pid = 1;
+	while (pid > 0)
+		pid = wait(&status);
 }
