@@ -6,13 +6,13 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:37:06 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 19:38:01 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:27:36 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-bool	ft_execute_process(t_process *process, char **envp)
+bool	ft_execute_process(t_args *args, t_process *process, char **envp)
 {
 	process->pid = fork();
 	if (process->pid == -1)
@@ -27,7 +27,13 @@ bool	ft_execute_process(t_process *process, char **envp)
 			return (false);
 		ft_close_fd(&process->pipe_fd_out[PIPE_READ]);
 		ft_close_fd(&process->pipe_fd_out[PIPE_WRITE]);
-		execve(process->cmd, process->args, envp);
+		if (ft_strlen(process->cmd) > 0)
+			execve(process->cmd, process->args, envp);
+		else
+		{
+			ft_free_close(args);
+			exit(127);
+		}
 	}
 	return (true);
 }

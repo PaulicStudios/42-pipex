@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:50:46 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:58:52 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:57:08 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ char	*ft_get_cmd_path(char *cmd, char *path, t_args *args)
 	char	*cmd_path;
 	int		ind;
 
+	if (!cmd)
+		return (NULL);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
 	dirs = ft_split(path, ':');
 	ind = 0;
 	while (dirs[ind])

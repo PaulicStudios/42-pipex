@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:51:26 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:28:06 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_wait_for_processes(void);
 void	ft_free_close(t_args *args);
 
 //fork.c
-bool	ft_execute_process(t_process *process, char **envp);
+bool	ft_execute_process(t_args *args, t_process *process, char **envp);
 
 //utils.c
 void	ft_close_fd(int *fd);

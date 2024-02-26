@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:54:34 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:36:35 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,19 @@ t_process	*ft_parse_process_infos(t_args *args, char *cmd, char *path)
 	if (!process)
 		ft_exit_error(args, "malloc failed");
 	process->args = ft_split(cmd, ' ');
+	if (!process->args)
+		ft_exit_error(args, "split failed");
 	process->cmd = ft_get_cmd_path(process->args[0], path, args);
 	if (!process->cmd)
 	{
 		ft_putstr_fd("command not found: ", 2);
 		ft_putstr_fd(process->args[0], 2);
 		ft_putchar_fd('\n', 2);
-		process->cmd = ft_strdup("");
 	}
+	process->pipe_fd_in[PIPE_READ] = -1;
+	process->pipe_fd_in[PIPE_WRITE] = -1;
+	process->pipe_fd_out[PIPE_READ] = -1;
+	process->pipe_fd_out[PIPE_WRITE] = -1;
 	return (process);
 }
 
