@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:06:03 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:50:58 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:46:44 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ void	ft_check_fd(int fd, t_args *args)
 	}
 }
 
-void	ft_wait_for_processes(void)
+int	ft_wait_for_processes(t_args *args)
 {
-	int	status;
-	int	pid;
+	int		status;
+	pid_t	pid;
 
-	pid = 1;
-	while (pid > 0)
-		pid = wait(&status);
+	status = 0;
+	pid = args->processes[args->process_len - 1]->pid;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (EXIT_FAILURE);
 }

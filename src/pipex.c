@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:01:37 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:55:45 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:03:50 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_exit_error(t_args *args, char *msg)
 int	main(int argc, char **argv, char **envp)
 {
 	t_args	args;
+	int		exit_status;
 
 	if (argc < 5)
 	{
@@ -53,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	args = ft_parse_args(argc, argv, envp);
 	ft_execute_processes(&args, envp);
+	exit_status = ft_wait_for_processes(&args);
 	ft_free_close(&args);
-	ft_wait_for_processes();
+	return (exit_status);
 }

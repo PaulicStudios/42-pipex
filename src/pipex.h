@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:04:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/26 15:28:06 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:12:28 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_process
 	int		pipe_fd_out[2];
 	char	*cmd;
 	char	**args;
-	int		pid;
+	pid_t	pid;
 }			t_process;
 typedef struct s_args
 {
@@ -59,7 +59,6 @@ void	ft_handle_here_doc(t_args *args, char **argv, int argc);
 
 //execute_process.c
 void	ft_execute_processes(t_args *args, char **envp);
-void	ft_wait_for_processes(void);
 void	ft_free_close(t_args *args);
 
 //fork.c
@@ -69,6 +68,6 @@ bool	ft_execute_process(t_args *args, t_process *process, char **envp);
 void	ft_close_fd(int *fd);
 void	ft_close_pipes(t_args *args);
 void	ft_check_fd(int fd, t_args *args);
-void	ft_wait_for_processes(void);
+int		ft_wait_for_processes(t_args *args);
 
 #endif
