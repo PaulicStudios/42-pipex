@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:22:52 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/25 20:35:28 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:36:07 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_handle_here_doc(t_args *args, char **argv, int argc)
 
 	args->limiter = argv[2];
 	args->fd_out = open(argv[argc - 1], O_APPEND | O_WRONLY | O_CREAT, 0644);
-	ft_check_fd(args->fd_out, args);
+	ft_check_fd(args->fd_out);
 	if (pipe(fd_pipe) == -1)
 		ft_exit_error(args, "Error creating pipe");
 	args->fd_in = fd_pipe[PIPE_READ];

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:20:02 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/02/26 15:36:35 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:35:57 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_process	*ft_parse_process_infos(t_args *args, char *cmd, char *path)
 void	ft_handle_default(t_args *args, int argc, char **argv)
 {
 	args->fd_in = open(argv[1], O_RDONLY);
-	ft_check_fd(args->fd_in, args);
+	ft_check_fd(args->fd_in);
 	args->fd_out = open(argv[argc - 1], O_TRUNC | O_WRONLY | O_CREAT, 0644);
-	ft_check_fd(args->fd_out, args);
+	ft_check_fd(args->fd_out);
 }
 
 void	ft_fill_command_args(t_args *args, char **argv, int argc, char **envp)
